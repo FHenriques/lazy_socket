@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ConstVars/qmldir</file>
+        <file>ConstVars/Colors.qml</file>
+        <file>ConstVars/Sizes.qml</file>
+        <file>ConstVars/Margins.qml</file>
+        <file>QMLPages/qmldir</file>
+        <file>QMLPages/SocketServer.qml</file>
+    </qresource>
+</RCC>

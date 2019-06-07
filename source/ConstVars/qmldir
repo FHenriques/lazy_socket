@@ -1,0 +1,4 @@
+module ConstVars
+singleton Sizes 0.1 Sizes.qml
+singleton Margins 0.1 Margins.qml
+singleton Colors 0.1 Colors.qml

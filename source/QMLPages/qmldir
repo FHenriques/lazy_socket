@@ -1,0 +1,2 @@
+module QMLPages
+SocketServer 0.1 SocketServer.qml
