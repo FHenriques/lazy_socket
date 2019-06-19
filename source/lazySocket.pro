@@ -1,4 +1,4 @@
-QT += quick
+QT += quick network xml
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -13,7 +13,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+    Communication/lazysocketclient.cpp \
+    userdata.cpp \
+    ConstVars/xml-config-reader.cpp \
+    Communication/socket-tool-server.cpp
 
 RESOURCES += qml.qrc
 
@@ -27,3 +31,12 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    Communication/lazysocketclient.h \
+    userdata.h \
+    ConstVars/xml-config-reader.h \
+    Communication/socket-tool-server.h
+
+DISTFILES += \
+    ../build-untitled-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/lazy_ini.xml

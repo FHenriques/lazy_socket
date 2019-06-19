@@ -7,5 +7,7 @@
         <file>ConstVars/Margins.qml</file>
         <file>QMLPages/qmldir</file>
         <file>QMLPages/SocketServer.qml</file>
+        <file>AppVars/AppData.qml</file>
+        <file>AppVars/qmldir</file>
     </qresource>
 </RCC>

@@ -1,0 +1,2 @@
+module AppVars
+singleton AppData 0.1 AppData.qml

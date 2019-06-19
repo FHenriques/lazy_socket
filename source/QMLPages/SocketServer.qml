@@ -2,6 +2,8 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
 import ConstVars 0.1
+import SocketsToolServer 0.1
+import AppVars 0.1
 
 Item {
     ColumnLayout{
@@ -20,18 +22,50 @@ Item {
             }
 
             TextField{
-
+                id:id_textField_port
             }
 
             Button{
                 id:id_btn_start
-                text:"Start Listening"
+                text:AppData.socketServer_isConnected ? "Stop Listening":"Start Listening"
+                onClicked: {
+                    if(AppData.socketServer_isConnected){
+                        socketServer.stop()
+                    }else{
+                        socketServer.setPort(parseInt(id_textField_port.text))
+                        socketServer.start()
+                    }
+                }
             }
             Rectangle{
                 Layout.preferredWidth:  id_btn_start.height/2
                 Layout.preferredHeight:  id_btn_start.height/2
                 radius: id_btn_start.height/2
-                color: "red"
+                color:"black"
+                function setColor(state){
+                    switch(state){
+                    case SocketsToolServer.SOCKET_TOOL_SERVER__LISTENING_WITH_CLIENTS:
+                        color = "green"
+                        AppData.socketServer_isConnected = true;
+                        break
+                    case SocketsToolServer.SOCKET_TOOL_SERVER__LISTENING_NO_CLIENTS:
+                        AppData.socketServer_isConnected = true
+                        color = "orange"
+                        break
+                    case SocketsToolServer.SOCKET_TOOL_SERVER__LISTENING_ERROR:
+                        color = "red"
+                        AppData.socketServer_isConnected = false
+                        break
+                    default:
+                        color = "black"
+                        AppData.socketServer_isConnected = false
+                        break;
+                    }
+                    console.log("HERE " + state +" " + SocketServer.SOCKET_TOOL_SERVER__LISTENING_NO_CLIENTS);
+                }
+                Component.onCompleted: {
+                    socketServer.sig__stateChanged.connect(setColor);
+                }
             }
         }
 
@@ -92,12 +126,7 @@ Item {
                     id:id_textArea_socketData
                     Layout.fillHeight: true
                     Layout.fillWidth: true
-                    text:"TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT
-TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT
-TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT
-TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT
-TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT
-TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT "
+                    text:""
 
                 }
                 RowLayout{
