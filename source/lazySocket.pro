@@ -14,10 +14,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    Communication/lazysocketclient.cpp \
     userdata.cpp \
     ConstVars/xml-config-reader.cpp \
-    Communication/socket-tool-server.cpp
+    Communication/socket-tool-server.cpp \
+    Communication/socket-tool-client.cpp \
+    Communication/clients-monitor.cpp \
+    Communication/socket-client-datapacket.cpp \
+    Models/socket-clients-list.cpp \
+    Models/socket-clients-model.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,10 +37,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    Communication/lazysocketclient.h \
     userdata.h \
     ConstVars/xml-config-reader.h \
-    Communication/socket-tool-server.h
+    Communication/socket-tool-server.h \
+    Communication/socket-tool-client.h \
+    Communication/clients-monitor.h \
+    Communication/socket-client-datapacket.h \
+    Models/socket-clients-list.h \
+    Models/socket-clients-model.h
 
 DISTFILES += \
-    ../build-untitled-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/lazy_ini.xml
+    ../build-untitled-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/lazy_ini.xml \
+    ../build-untitled-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/readme.md

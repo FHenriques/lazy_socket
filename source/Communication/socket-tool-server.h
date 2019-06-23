@@ -4,9 +4,10 @@
 #include <QObject>
 #include <QTcpServer>
 #include <QQmlEngine>
+#include <QThreadPool>
+#include "socket-tool-client.h"
 
-
-class SocketsToolServer : public QObject
+class SocketsToolServer : public QTcpServer
 {
     Q_OBJECT
     Q_PROPERTY(SocketsToolServerState currentState READ getCurrentState)
@@ -43,28 +44,32 @@ public:
     void config__welcome_message(QString message,bool isEnabled);
     void config__enable_welcome_message(bool isEnabled);
 signals:
-    void sig__new_connection(void);
-    void sig__new_data_available(void);
+    void sig__new_connection(SocketsToolClient *client);
+    void sig__new_data_available(QString data);
     void sig__serverStarted(void);
     void sig__stateChanged(SocketsToolServerState state);
     void sig__error(void);
+    void sig__write(QString data);
 
 public slots:
-    void slot__new_connection(void);
     void slot__new_data_available(void);
     void slot__client_disconnect(void);
-
+    void slot__welcome_message(SocketsToolClient *client);
 private:
     void _set__state(SocketsToolServerState state);
     quint16 port;
     SocketsToolServerState currentState;
-    QTcpServer *server;
     struct{
         struct{
             QString text = "";
             bool isEnabled = 0;
         }welcome_message;
     }config;
+
+    QThreadPool pool;
+
+protected:
+    virtual void incomingConnection(qintptr handle) Q_DECL_OVERRIDE;
 };
 
 #endif // LAZYSOCKETSERVER_H

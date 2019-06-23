@@ -13,7 +13,7 @@ public:
 
     void read_initXML(void);
     void read_newClientWelcome(QDomDocument *xmlReader);
-    void read_scripts(QDomDocument *xmlReader);
+    void read_textFormat(QDomDocument *xmlReader);
 
 private:
     UserData* xml_user_config;

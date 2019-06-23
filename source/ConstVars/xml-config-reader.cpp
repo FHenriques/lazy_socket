@@ -26,7 +26,7 @@ void XMLConfigReader::read_initXML()
     }
     xmlReaderFile.close();
     read_newClientWelcome(&xmlReader);
-    read_scripts(&xmlReader);
+    read_textFormat(&xmlReader);
 }
 
 void XMLConfigReader::read_newClientWelcome(QDomDocument *xmlReader)
@@ -47,7 +47,25 @@ void XMLConfigReader::read_newClientWelcome(QDomDocument *xmlReader)
     }
 }
 
-void XMLConfigReader::read_scripts(QDomDocument *xmlReader)
+void XMLConfigReader::read_textFormat(QDomDocument *xmlReader)
 {
+    QDomNodeList nodes = xmlReader->firstChildElement().childNodes();
+        qDebug() << "NODES COUNT: " <<  nodes.count() ;
 
+    for (int var = 0; var < nodes.count(); var++) {
+        if(!nodes.at(var).toElement().tagName().compare("textFormat")){
+            qDebug() << "NODE TEXT: " <<  nodes.at(var).toElement().text() ;
+            if( nodes.at(var).toElement().text() == "TEXT__FORMAT_SIMPLE"){
+                xml_user_config->textFormat = UserData::TEXT__FORMAT_SIMPLE;
+            }else if( nodes.at(var).toElement().text() == "TEXT__FORMAT_IP"){
+                xml_user_config->textFormat = UserData::TEXT__FORMAT_IP;
+            }else if( nodes.at(var).toElement().text() == "TEXT__FORMAT_HANDLER"){
+                xml_user_config->textFormat = UserData::TEXT__FORMAT_HANDLER;
+            }else if( nodes.at(var).toElement().text() == "TEXT__FORMAT_IP_HANDLER"){
+                xml_user_config->textFormat = UserData::TEXT__FORMAT_IP_HANDLER;
+            }
+            break;
+        }
+    }
+    qDebug() << "TIPO FORMATACAO TEXTO: " <<  xml_user_config->textFormat ;
 }

@@ -9,5 +9,7 @@
         <file>QMLPages/SocketServer.qml</file>
         <file>AppVars/AppData.qml</file>
         <file>AppVars/qmldir</file>
+        <file>QMLItems/SocketsClientList.qml</file>
+        <file>QMLItems/qmldir</file>
     </qresource>
 </RCC>
